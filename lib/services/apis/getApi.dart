@@ -10,14 +10,15 @@ Future getUser() async {
     var response =
         await Dio().get('https://jsonplaceholder.typicode.com/users');
     print(response.statusCode);
+    // print(response.data);
+
     if (response.statusCode == 200) {
-      final body = response.data;
-      print(HamroModel.fromJson(response.data));
-      List naya = body
-        ..map(
-          (dynamic item) => HamroModel.fromJson(item),
-        ).toList();
-      print(naya);
+      List naya = response.data
+          .map(
+            (dynamic item) => HamroModel.fromJson(item),
+          )
+          .toList();
+
       return naya;
     } else {
       print("api not found");

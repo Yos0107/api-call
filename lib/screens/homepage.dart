@@ -24,19 +24,23 @@ class _HomepageState extends State<Homepage> {
         appBar: AppBar(
           title: Text('Api Testing'),
         ),
-        body: Consumer<Hamroprovider>(
-          builder: (context, value, child) {
-            print(value.antim);
-            return Text("MMM");
-            // ListView.builder(
-            //   itemCount: value.antim.,
-            //   itemBuilder: ((context, index) {
-            //     return ListTile(
-            //         // title: Text("${value.antim.}"),
-            //         subtitle: Text("this is subtitile"));
-            //   }),
-            // );
-          },
-        ));
+        body: Consumer<Hamroprovider>(builder: (context, value, child) {
+          if (value.antim.length == null) {
+            return Text("no data");
+          } else {
+            return ListView.builder(
+              itemCount: value.antim.length,
+              itemBuilder: ((context, index) {
+                return ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Colors.green.shade200,
+                      child: Text("${index + 1}"),
+                    ),
+                    title: Text(value.antim[index].name),
+                    subtitle: Text(value.antim[index].email));
+              }),
+            );
+          }
+        }));
   }
 }
