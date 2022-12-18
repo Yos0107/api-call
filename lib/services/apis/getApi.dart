@@ -1,26 +1,28 @@
-import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:api_testing/models/usermodel.dart';
+import 'package:api_testing/services/provider.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 
-Future<List<User>> GetUser() async {
+Future getUser() async {
   try {
-    final response =
+    var response =
         await Dio().get('https://jsonplaceholder.typicode.com/users');
+    print(response.statusCode);
     if (response.statusCode == 200) {
-      // print(response.data);
-      List<User> body = response.data;
-      List<User> user = body
-          .map(
-            (dynamic item) => User.fromJson(item),
-          )
-          .toList();
-      // print(user);
-      return user;
+      final body = response.data;
+      print(HamroModel.fromJson(response.data));
+      List naya = body
+        ..map(
+          (dynamic item) => HamroModel.fromJson(item),
+        ).toList();
+      print(naya);
+      return naya;
     } else {
-      print("Data not found");
+      print("api not found");
     }
   } catch (e) {
-    print(e);
+    return e.toString();
   }
 }
